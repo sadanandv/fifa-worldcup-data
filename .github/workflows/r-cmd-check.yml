@@ -1,0 +1,60 @@
+# R CMD CHECK --as-cran on push and PR to main, across r-release and r-devel.
+# Modeled on the standard r-lib/actions check-standard workflow.
+name: R-CMD-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  R-CMD-check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        r-version: [release, devel]
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Set up R (${{ matrix.r-version }})
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.r-version }}
+          use-public-rspm: true
+
+      - name: Install dependencies via pak
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          # setup-r-dependencies uses pak under the hood and caches the R library
+          # across runs, so no separate cache step is needed.
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - name: Run R CMD CHECK (--as-cran)
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"warning"'
+          upload-snapshots: true
+
+      - name: Upload check results on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.r-version }}-check-results
+          path: check
