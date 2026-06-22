@@ -17,15 +17,16 @@ Description: An extended, maintained fork of the Fjelstul World Cup Database.
     matches, teams, players, managers, referees, squads, goals, penalty kicks,
     bookings, substitutions, standings, and awards. It covers all 22 men's
     tournaments (1930-2022) and all 8 women's tournaments (1991-2019). Original
-    database by Joshua C. Fjelstul, Ph.D. (https://github.com/jfjelstul/worldcup),
-    used under CC-BY-SA 4.0. Extended and maintained by Sadanand Venkataraman.
+    database by Joshua C. Fjelstul, Ph.D. (<https://github.com/jfjelstul/worldcup>), used under CC-BY-SA 4.0.
+    Extended and maintained by Sadanand Venkataraman.
     A companion Python package builds a forecasting and analytics layer on top
-    of this core data; see
-    https://github.com/sadanandv/fifa-worldcup-data-python.
+    of this core data; 
+    see <https://github.com/sadanandv/fifa-worldcup-data-python>.
 URL: https://github.com/sadanandv/fifa-worldcup-data
 BugReports: https://github.com/sadanandv/fifa-worldcup-data/issues
 Date: 2026-06-22
-License: CC-BY-SA 4.0
+License: CC BY-SA 4.0 + file LICENSE
 Encoding: UTF-8
+Depends: R (>= 3.5.0)
 LazyData: true
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.0.0

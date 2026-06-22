@@ -1,13 +1,13 @@
-# R/data.R
+﻿# R/data.R
 # Roxygen2 documentation for all bundled datasets.
-# DO NOT add analytical or Phase 5 tables here — R package scope is frozen at 29 core tables.
+# DO NOT add analytical or Phase 5 tables here â€” R package scope is frozen at 29 core tables.
 # To add var_interventions and in_match_penalties in Session 10, append two blocks at the end.
 #
 # Regenerate man/*.Rd and NAMESPACE by running:
 #   roxygen2::roxygenise()
 # from the package root after any change to this file.
 
-# ── Codebook objects ────────────────────────────────────────────────────────
+# â”€â”€ Codebook objects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 #' Codebook: Dataset Descriptions
 #'
@@ -45,7 +45,7 @@
 #' @keywords datasets
 "variables"
 
-# ── Core entity tables ───────────────────────────────────────────────────────
+# â”€â”€ Core entity tables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 #' Award Winners
 #'
@@ -539,7 +539,7 @@
 #' @keywords datasets
 "tournaments"
 
-# ── Session 10 placeholder ───────────────────────────────────────────────────
+# â”€â”€ Session 10 placeholder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 # Add two blocks here in Session 10 for var_interventions and in_match_penalties
 # after those data objects are built by build-database.R.
 # Follow the same structure as all blocks above.
