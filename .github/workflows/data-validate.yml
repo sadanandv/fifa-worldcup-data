@@ -1,0 +1,204 @@
+# Validates referential and structural integrity of the core CSV datasets
+# whenever any file under data-csv/ changes on main.
+#
+# NOTE: The expected row counts hardcoded in the R script below are the original
+# Fjelstul v1.2.0 observation counts (27 core tables). These MUST be updated in
+# Session 11, after Phase 2 (2023 WWC + 2026 MWC) data is built, and extended to
+# cover var_interventions and in_match_penalties at that time.
+name: data-validate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data-csv/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R (release)
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+
+      - name: Install tidyverse
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: any::tidyverse
+
+      - name: Validate data integrity
+        run: |
+          Rscript -e '
+            suppressPackageStartupMessages({
+              library(readr)
+              library(dplyr)
+            })
+
+            data_dir <- "data-csv"
+            failures <- character(0)
+
+            fail <- function(msg) {
+              failures <<- c(failures, msg)
+              message("FAIL: ", msg)
+            }
+
+            read_table <- function(name) {
+              path <- file.path(data_dir, paste0(name, ".csv"))
+              if (!file.exists(path)) {
+                fail(sprintf("missing file: %s", path))
+                return(NULL)
+              }
+              read_csv(path, show_col_types = FALSE, progress = FALSE)
+            }
+
+            # ---- Check 1: row counts match expected (Fjelstul v1.2.0 counts) ----
+            # UPDATE THESE IN SESSION 11 after Phase 2 data is built.
+            expected_counts <- c(
+              tournaments          = 30,
+              confederations       = 6,
+              teams                = 88,
+              players              = 10401,
+              managers             = 475,
+              referees             = 493,
+              stadiums             = 240,
+              matches              = 1248,
+              awards               = 8,
+              qualified_teams      = 625,
+              squads               = 13843,
+              manager_appointments = 637,
+              referee_appointments = 668,
+              team_appearances     = 2496,
+              player_appearances   = 27432,
+              manager_appearances  = 2538,
+              referee_appearances  = 1248,
+              goals                = 3637,
+              penalty_kicks        = 396,
+              bookings             = 3178,
+              substitutions        = 10222,
+              host_countries       = 31,
+              tournament_stages    = 155,
+              groups               = 117,
+              group_standings      = 626,
+              tournament_standings = 120,
+              award_winners        = 200
+            )
+
+            tables <- list()
+            for (nm in names(expected_counts)) {
+              tbl <- read_table(nm)
+              tables[[nm]] <- tbl
+              if (!is.null(tbl)) {
+                actual <- nrow(tbl)
+                if (actual != expected_counts[[nm]]) {
+                  fail(sprintf(
+                    "row count for %s: expected %d, got %d",
+                    nm, expected_counts[[nm]], actual
+                  ))
+                }
+              }
+            }
+
+            # ---- Check 2: no NA in any primary key column ----
+            # Each core table keyed by "<singular-ish>_id"; map explicitly.
+            pk_cols <- c(
+              tournaments          = "tournament_id",
+              confederations       = "confederation_id",
+              teams                = "team_id",
+              players              = "player_id",
+              managers             = "manager_id",
+              referees             = "referee_id",
+              stadiums             = "stadium_id",
+              matches              = "match_id",
+              awards               = "award_id",
+              qualified_teams      = "key_id",
+              squads               = "key_id",
+              manager_appointments = "key_id",
+              referee_appointments = "key_id",
+              team_appearances     = "key_id",
+              player_appearances   = "key_id",
+              manager_appearances  = "key_id",
+              referee_appearances  = "key_id",
+              goals                = "goal_id",
+              penalty_kicks        = "penalty_kick_id",
+              bookings             = "booking_id",
+              substitutions        = "substitution_id",
+              host_countries       = "key_id",
+              tournament_stages    = "key_id",
+              groups               = "key_id",
+              group_standings      = "key_id",
+              tournament_standings = "key_id",
+              award_winners        = "key_id"
+            )
+
+            for (nm in names(pk_cols)) {
+              tbl <- tables[[nm]]
+              col <- pk_cols[[nm]]
+              if (is.null(tbl)) next
+              if (!col %in% names(tbl)) {
+                fail(sprintf("%s: expected PK column %s not found", nm, col))
+                next
+              }
+              n_na <- sum(is.na(tbl[[col]]))
+              if (n_na > 0) {
+                fail(sprintf("%s: %d NA value(s) in PK column %s", nm, n_na, col))
+              }
+            }
+
+            # ---- Referential integrity helper ----
+            check_fk <- function(child_name, child_col, parent_name, parent_col) {
+              child  <- tables[[child_name]]
+              parent <- tables[[parent_name]]
+              if (is.null(child) || is.null(parent)) return(invisible())
+              if (!child_col %in% names(child)) {
+                fail(sprintf("%s: column %s not found", child_name, child_col))
+                return(invisible())
+              }
+              if (!parent_col %in% names(parent)) {
+                fail(sprintf("%s: column %s not found", parent_name, parent_col))
+                return(invisible())
+              }
+              child_vals <- child[[child_col]]
+              child_vals <- child_vals[!is.na(child_vals)]
+              orphans <- setdiff(unique(child_vals), unique(parent[[parent_col]]))
+              if (length(orphans) > 0) {
+                n_rows <- sum(child[[child_col]] %in% orphans)
+                fail(sprintf(
+                  "%s.%s -> %s.%s: %d row(s) reference %d missing key(s)",
+                  child_name, child_col, parent_name, parent_col,
+                  n_rows, length(orphans)
+                ))
+              }
+            }
+
+            # ---- Checks 3-5: match_id integrity ----
+            check_fk("goals",         "match_id", "matches", "match_id")
+            check_fk("bookings",      "match_id", "matches", "match_id")
+            check_fk("substitutions", "match_id", "matches", "match_id")
+
+            # ---- Check 6: team_id integrity ----
+            check_fk("team_appearances", "team_id", "teams", "team_id")
+
+            # ---- Check 7: player_id integrity ----
+            check_fk("player_appearances", "player_id", "players", "player_id")
+
+            # ---- Summary ----
+            if (length(failures) > 0) {
+              stop(sprintf(
+                "data-validate failed with %d issue(s); see messages above.",
+                length(failures)
+              ))
+            }
+            message("All data integrity checks passed.")
+          '
