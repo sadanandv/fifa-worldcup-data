@@ -12,3 +12,13 @@ _source/
 worldcup.Rproj
 .Rproj.user
 media-coverage/
+
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+site/
