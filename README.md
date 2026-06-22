@@ -1,22 +1,60 @@
-# The Fjelstul World Cup Database
+# fifa-worldcup-data — An Extended FIFA World Cup Database
 
-The Fjelstul World Cup Database is a comprehensive database about the FIFA World Cup created by Joshua C. Fjelstul, Ph.D. that covers all `22` men's tournaments (1930-2022) and all `8` women's tournaments (1991-2019). The database includes `27` datasets (over 1.58 million data points) that cover all aspects of the World Cup.
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
+[![Maintained](https://img.shields.io/badge/Maintained-yes-brightgreen.svg)](https://github.com/sadanandv/fifa-worldcup-data)
+[![R-CMD-check](https://github.com/sadanandv/fifa-worldcup-data/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/sadanandv/fifa-worldcup-data/actions/workflows/r-cmd-check.yml)
 
-The database has been featured by [The Washington Post](https://www.washingtonpost.com/sports/2022/12/18/mbappe-messi-golden-boot-world-cup/),  [FiveThirtyEight](https://fivethirtyeight.com/features/the-datasets-were-looking-at-this-week-10/), [The Markup](https://themarkup.org/data-is-plural/2022/07/20/voting-laws-u-s-budget-appropriations-and-the-world-cup), [Data is Plural](https://www.data-is-plural.com/archive/2022-07-20-edition/), [The Times](https://www.thetimes.co.uk/article/fifa-world-cup-history-statistics-goals-trophies-stadiums-teams-ptbt62xpq), [Agence France-Presse (AFP)](https://www.barrons.com/news/scorers-in-world-cup-football-01668769510), [Barron's](https://www.barrons.com/news/scorers-in-world-cup-football-01668769510), [Latinometrics](https://www.reddit.com/r/dataisbeautiful/comments/z9rt2b/oc_brazil_and_argentina_are_the_top_goalscorers/), [Hindustan Times](https://www.hindustantimes.com/static-content/10m/fifa-world-cup/the-race-for-goals/index.html), and [DataCamp](https://s3.amazonaws.com/assets.datacamp.com/email/other/Exploring+World+Cup+Data+in+Power+BI+(1).pdf).
+A maintained, extended fork of the **Fjelstul World Cup Database** — a comprehensive database about the FIFA World Cup created by Joshua C. Fjelstul, Ph.D. The original covers all `22` men's tournaments (1930-2022) and all `9` women's tournaments (1991-2023, with data expansion for 2023 planned in this fork). The database includes `27` datasets (over 1.58 million data points) that cover all aspects of the World Cup.
 
 Users can use the database to calculate statistics about teams, players, managers, and referees. Users can also use the data to predict match results. With many units of analysis and opportunities for merging and reshaping data, the database is also an excellent resource for teaching data science skills.
 
-Here are some example visualizations that use the data:
+## This Fork
 
-<div>
-  <img src="https://github.com/jfjelstul/worldcup/blob/master/visualizations/match-results.png?raw=true" width="90%">
-</div>
-<div>
-  <img src="https://github.com/jfjelstul/worldcup/blob/master/visualizations/goals-by-European-teams.png?raw=true" width="70%">
-</div>
-<div>
-  <img src="https://github.com/jfjelstul/worldcup/blob/master/visualizations/goals-by-South-American-teams.png?raw=true" width="70%">
-</div>
+This repository extends the original Fjelstul World Cup Database. The following additions are planned or complete across the project roadmap:
+
+1. **2023 FIFA Women's World Cup** data (Australia/New Zealand) — *planned for Phase 2*
+2. **2026 FIFA Men's World Cup** data (USA/Canada/Mexico, 48-team format) — *planned for Phase 2*
+3. **Two new tables:** `var_interventions` and `in_match_penalties` — *planned for Phase 2*
+4. Audit fixes: LICENSE file, CHANGELOG, CONTRIBUTING guide, explicit NAMESPACE, CITATION.cff
+5. GitHub Actions CI/CD (R CMD CHECK, data validation)
+6. roxygen2 documentation for every dataset
+7. Updated package metadata (authorship, URL, license declaration)
+8. Codebook updates with new tables and row counts — *planned for Phase 2*
+9. A **companion Python package** with a forecasting/analytics layer is maintained separately at [fifa-worldcup-data-python](https://github.com/sadanandv/fifa-worldcup-data-python), for users who want pandas DataFrames or match/tournament forecasts.
+
+## Attribution
+
+This project is a maintained fork of the **Fjelstul World Cup Database** by Joshua C. Fjelstul, Ph.D.
+
+> Original database © 2023 Joshua C. Fjelstul, Ph.D.
+> Licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
+> Original repository: [jfjelstul/worldcup](https://github.com/jfjelstul/worldcup)
+
+This derivative work is maintained by **Sadanand Venkataraman** and is also released under
+[CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
+
+A companion Python package with a forecasting/analytics layer built on top of this
+data is available separately at
+[fifa-worldcup-data-python](https://github.com/sadanandv/fifa-worldcup-data-python).
+
+## Modifications
+
+Required disclosure under CC-BY-SA 4.0. The following changes have been made in this fork relative to the original `jfjelstul/worldcup` repository (as of v1.3.0):
+
+- Renamed the R package from `worldcup` to `fifaworldcupdata`
+- Updated authorship metadata in `DESCRIPTION` (Sadanand Venkataraman as author/maintainer; Joshua C. Fjelstul retained as author and copyright holder)
+- Corrected the repository URL and added a `BugReports` field
+- Added a `LICENSE` file with the full CC-BY-SA 4.0 legal text
+- Added `CHANGELOG.md` (Keep a Changelog format)
+- Added `CONTRIBUTING.md` with issue and PR guidance
+- Added `CITATION.cff` for GitHub-native citation
+- Added GitHub issue templates (data-error, enhancement) and a pull request template
+- Added GitHub Actions workflows: `r-cmd-check.yml` and `data-validate.yml`
+- Added `R/data.R` with roxygen2 documentation for all `27` datasets and regenerated the package `man/` help pages
+- Updated the `License` declaration to `CC BY-SA 4.0 + file LICENSE` and declared `Depends: R (>= 3.5.0)`
+- Rewrote this README with attribution, modifications, and updated installation and citation sections
+
+*Planned for Phase 2: addition of 2023 WWC and 2026 MWC data, the `var_interventions` and `in_match_penalties` tables, and corresponding codebook updates.*
 
 ## Overview of the database
 
@@ -32,28 +70,30 @@ The `27` datasets in the database are organized into `5` groups:
 
 5. A fifth group of datasets (containing `6` datasets) cover tournament-level attributes. There a dataset about host countries (`host_countries`), including the performance of each host country; a dataset about the stages in each tournament (`tournament_stages`), which records each stage of the tournament, the dates of the stage, and key features of the stage; a dataset about the groups in each group stage (`groups`), which indicates the name of each group and the number of teams in each group; a dataset about the final standings in each group (`group_standings`); a dataset about the final standings for each tournament (`tournament_standings`); and a dataset about all individual player awards handed out at each tournament (`award_winners`).
 
+*Note: the women's tournament count is `9` (1991-2023). Data expansion to include the 2023 FIFA Women's World Cup is planned for Phase 2 of this fork.*
+
 ## Downloading the data
 
-The Fjelstul World Cup Database is available via the `R` package `worldcup`, which you can install from this repository (instructions below). Note that this repository is structured as a repository for an `R` package. You can also download the database directly from this repository in `4` formats: an `.RData` version of the database is available in the `data/` folder, a `.csv` version is available in the `data-csv/` folder, a `.json` version is available in the `data-json/` folder, and a relational database version (`SQLite`) is available in the `data-sqlite/` folder.
+The database is available via the `R` package `fifaworldcupdata`, which you can install from this repository (instructions below). Note that this repository is structured as a repository for an `R` package. You can also download the database directly from this repository in `4` formats: an `.RData` version of the database is available in the `data/` folder, a `.csv` version is available in the `data-csv/` folder, a `.json` version is available in the `data-json/` folder, and a relational database version (`SQLite`) is available in the `data-sqlite/` folder.
 
 The `.Rdata`, `.csv`, and `.json` versions of the database are all identical except for the file format. These versions of the database are not technically relational because many tables already include variables that have been merged in from other tables for convenience (i.e., some data exists in multiple tables). The `SQLite` version includes all of the same variables, but variables from other tables are not already merged in. Dummy variables that are coded `0` or `1` are converted to `FALSE` and `TRUE`. Users can use the primary and foreign keys in the tables to merge in data from other tables. See the `README.md` file in the `data-sqlite/` folder for more details on using the relational database.
 
 ## Downloading the codebook
 
-The codebook for the Fjelstul World Cup Database is available in `.pdf` format in the `codebook/pdf/` folder. 
+The codebook for the database is available in `.pdf` format in the `codebook/pdf/` folder. 
 The codebook is also available in `.csv` format in the `codebook/csv/` folder. There are `2` files: `datasets.csv`, which describes the contents of each dataset, and `variables.csv`, which describes each variable. 
 
-The codebook for the database is also included in the `R` package: `worldcup::datasets` and `worldcup::variables`. The same information is also available as part of the `R` documentation for each dataset. For example, you can see the codebook for the `worldcup::matches` dataset by running `?worldcup::matches`.
+The codebook for the database is also included in the `R` package: `fifaworldcupdata::datasets` and `fifaworldcupdata::variables`. The same information is also available as part of the `R` documentation for each dataset. For example, you can see the codebook for the `fifaworldcupdata::matches` dataset by running `?fifaworldcupdata::matches`.
 
 ## The license
 
 The copyright for the original structure and organization of the Fjelstul World Cup Database and for all of the documentation and replication code for the database is owned by Joshua C. Fjelstul, Ph.D.
 
-The Fjelstul World Cup Database and the `worldcup` package are both published under a [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/legalcode). This means that you can distribute, modify, and use all or part of the database for commercial or non-commercial purposes as long as (1) you provide proper attribution and (2) any new works you produce based on this database also carry the CC-BY-SA 4.0 license. 
+The database and the `fifaworldcupdata` package are both published under a [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/legalcode). This means that you can distribute, modify, and use all or part of the database for commercial or non-commercial purposes as long as (1) you provide proper attribution and (2) any new works you produce based on this database also carry the CC-BY-SA 4.0 license. 
 
-To provide proper attribution, according to the CC-BY-SA 4.0 license, you must provide the name of the author ("Joshua C. Fjelstul, Ph.D."), a notice that the database is copyrighted ("© 2023 Joshua C. Fjelstul, Ph.D."), a link to the CC-BY-SA 4.0 license (https://creativecommons.org/licenses/by-sa/4.0/legalcode), and a link to this repository (https://www.github.com/jfjelstul/worldcup). You must also indicate any modifications you have made to the database.
+To provide proper attribution, according to the CC-BY-SA 4.0 license, you must provide the name of the author ("Joshua C. Fjelstul, Ph.D."), a notice that the database is copyrighted ("© 2023 Joshua C. Fjelstul, Ph.D."), a link to the CC-BY-SA 4.0 license (https://creativecommons.org/licenses/by-sa/4.0/legalcode), and a link to the original repository (https://www.github.com/jfjelstul/worldcup). You must also indicate any modifications you have made to the database.
 
-Consistent with the CC-BY-SA 4.0 license, I provide this database as-is and as-available, and make no representations or warranties of any kind concerning the database, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. 
+Consistent with the CC-BY-SA 4.0 license, this database is provided as-is and as-available, with no representations or warranties of any kind concerning the database, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. 
 
 ## The datasets
 
@@ -113,7 +153,7 @@ Consistent with the CC-BY-SA 4.0 license, I provide this database as-is and as-a
 
 ## Data sources and replication code
 
-The data in the Fjelstul World Cup Database is coded based on information from Wikipedia. Some of this information is cross-referenced with the official FIFA match reports to check for accuracy. The Wikipedia pages used to code the data are archived in the `data-raw/` folder. Data on tournaments is hand-coded coded based on the pages in `data-raw/Wikipedia-tournament-pages/`, data on squads is machine-coded based on the pages in `data-raw/Wikipedia-squad-pages/`, data on matches is machine-coded based on the pages in `data-raw/Wikipedia-match-pages/`, and data on awards is hand-coded based on the page in `data-raw/Wikipedia-awards-page/`. The raw data for all of the datasets that are hand-coded are available in `data-raw/hand-coded-tables/`. 
+The data in the database is coded based on information from Wikipedia. Some of this information is cross-referenced with the official FIFA match reports to check for accuracy. The Wikipedia pages used to code the data are archived in the `data-raw/` folder. Data on tournaments is hand-coded coded based on the pages in `data-raw/Wikipedia-tournament-pages/`, data on squads is machine-coded based on the pages in `data-raw/Wikipedia-squad-pages/`, data on matches is machine-coded based on the pages in `data-raw/Wikipedia-match-pages/`, and data on awards is hand-coded based on the page in `data-raw/Wikipedia-awards-page/`. The raw data for all of the datasets that are hand-coded are available in `data-raw/hand-coded-tables/`. 
 
 The replication code for downloading the Wikipedia pages used to code the database is available in `data-raw/code/download-wikipedia-pages.R`. The replication code for extracting data from these pages is also available in `data-raw/code/`. The file `data-raw/code/parse-wikipedia-match-pages.R` extracts data from the match pages in `data-raw/Wikipedia-match-pages/` and the file `data-raw/code/parse-wikipedia-squad-pages.R` extracts data from the squad pages in `data-raw/Wikipedia-squad-pages/`. The working files produced by this code are stored in `data-raw/Wikipedia-data/`. The file `data-raw/code/build-database.R` compiles the database from the parsed data in `data-raw/Wikipedia-data/` and the hand-coded data in `data-raw/hand-coded-tables/`. 
 
@@ -139,44 +179,46 @@ The replication code for the codebook is available in `codebook/code/`.
 
 ## Installing the R package
 
-You can install the latest development version of the `worldcup` package from GitHub:
+You can install the latest development version of the `fifaworldcupdata` package from GitHub:
 
-```
+```r
 # install.packages("devtools")
-devtools::install_github("jfjelstul/worldcup")
+devtools::install_github("sadanandv/fifa-worldcup-data")
 ```
 
-## Citating the database
+The package loads as `library(fifaworldcupdata)`.
 
-If you use the database in a paper or project, please cite the database:
+If you would prefer pandas DataFrames, a command-line interface, or the forecasting/analytics layer, see the companion Python package: [fifa-worldcup-data-python](https://github.com/sadanandv/fifa-worldcup-data-python).
 
-> Fjelstul, Joshua C. "The Fjelstul World Cup Database v.1.2.0." July 19, 2023. https://www.github.com/jfjelstul/worldcup.
+## Citing This Database
 
-The `BibTeX` entry for the database is:
+If you use this database in research or a project, please cite both:
 
-```
-@Manual{Fjelstul2023,
-  author = {Fjelstul, Joshua C.},
-  title = {The Fjelstul World Cup Database v.1.2.0},
-  year = {2023}
+**This fork:**
+> Venkataraman, Sadanand. "fifa-worldcup-data v1.3.0." 2026.
+> https://github.com/sadanandv/fifa-worldcup-data
+
+**Original database (required attribution):**
+> Fjelstul, Joshua C. "The Fjelstul World Cup Database v.1.2.0." July 19, 2023.
+> https://github.com/jfjelstul/worldcup
+
+BibTeX:
+```bibtex
+@software{Venkataraman2026,
+  author = {Venkataraman, Sadanand},
+  title  = {fifa-worldcup-data: An Extended FIFA World Cup Database},
+  year   = {2026},
+  url    = {https://github.com/sadanandv/fifa-worldcup-data}
 }
-```
 
-If you access the database via the `worldcup` package, please also cite the package:
-
-> Joshua C. Fjelstul (2023). worldcup: The Fjelstul World Cup Database. R package version 1.2.0.
-
-The `BibTeX` entry for the `R` package is:
-
-```
-@Manual{,
-  title = {worldcup: The Fjelstul World Cup Database},
-  author = {Fjelstul, Joshua C.},
-  year = {2023},
-  note = {R package version 1.2.0},
+@software{Fjelstul2023,
+  author = {Fjelstul, {Joshua C.}},
+  title  = {The Fjelstul World Cup Database v.1.2.0},
+  year   = {2023},
+  url    = {https://github.com/jfjelstul/worldcup}
 }
 ```
 
 ## Reporting problems
 
-If you notice an error in the data or a bug in the `R` package, please report it [here](https://github.com/jfjelstul/worldcup/issues).
+If you notice an error in the data or a bug in the `R` package, please report it [here](https://github.com/sadanandv/fifa-worldcup-data/issues).
