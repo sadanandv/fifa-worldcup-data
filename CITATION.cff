@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this database, please cite it as below."
+authors:
+  - family-names: Venkataraman
+    given-names: Sadanand
+    email: saadanandv@gmail.com
+    affiliation: SNU Chennai
+title: "fifa-worldcup-data: An Extended FIFA World Cup Database"
+version: 2.0.0
+date-released: 2026-07-20
+url: "https://github.com/sadanandv/fifa-worldcup-data"
+license: CC-BY-SA-4.0
+references:
+  - type: software
+    authors:
+      - family-names: Fjelstul
+        given-names: "Joshua C."
+    title: "The Fjelstul World Cup Database v.1.2.0"
+    year: 2023
+    url: "https://github.com/jfjelstul/worldcup"
+    license: CC-BY-SA-4.0
